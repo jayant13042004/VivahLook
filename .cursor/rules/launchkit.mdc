@@ -1,0 +1,20 @@
+---
+description: LaunchKit universal AI context — read before changing code
+alwaysApply: true
+---
+
+# LaunchKit (Cursor adapter)
+
+This file is a **pointer only**. Do not treat it as a second rulebook.
+
+Read and follow, in order:
+
+1. `AI_RULES.md`
+2. `PROJECT_CONTEXT.md`
+3. `ARCHITECTURE.md` and `MODULES.md` as needed for the task
+4. Existing code (source of truth)
+5. `DOCUMENTATION.md` for env/SQL/provider setup only
+
+Also respect `AGENTS.md` (Next.js 16 — read `node_modules/next/dist/docs/` before using unfamiliar Next APIs).
+
+If this adapter conflicts with those files, **those files win**.
