@@ -21,7 +21,7 @@ function parsePost(filename: string): BlogPost | null {
   const parsed = matter(raw);
   const title = String(parsed.data.title ?? slug);
   const description = String(parsed.data.description ?? "");
-  const date = String(parsed.data.date ?? "");
+  const date = formatDate(parsed.data.date);
   const published = parsed.data.published !== false;
   const keywords = parseKeywords(parsed.data.keywords);
 
@@ -34,6 +34,13 @@ function parsePost(filename: string): BlogPost | null {
     keywords,
     content: parsed.content.trim(),
   };
+}
+
+function formatDate(value: unknown): string {
+  if (value instanceof Date && !Number.isNaN(value.getTime())) {
+    return value.toISOString().slice(0, 10);
+  }
+  return String(value ?? "");
 }
 
 function parseKeywords(value: unknown): string[] | undefined {

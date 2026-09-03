@@ -61,10 +61,9 @@ export function buildSitemap(): MetadataRoute.Sitemap {
   ];
 
   const merged = [...nav, ...posts, ...toolUrls, ...topicUrls];
-  const seen = new Set<string>();
-  return merged.filter((entry) => {
-    if (seen.has(entry.url)) return false;
-    seen.add(entry.url);
-    return true;
-  });
+  const byUrl = new Map<string, (typeof merged)[number]>();
+  for (const entry of merged) {
+    byUrl.set(entry.url, entry);
+  }
+  return [...byUrl.values()];
 }
