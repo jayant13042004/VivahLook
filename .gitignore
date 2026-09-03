@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/generator/node_modules
 /.pnp
 .pnp.*
 .yarn/*
@@ -40,3 +41,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Phase 7 generator test output
+/tmp-generate/
+/generator/tmp-generate/

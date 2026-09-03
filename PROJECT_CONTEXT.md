@@ -6,7 +6,7 @@ Personal use. Not a public framework.
 
 ---
 
-## What exists today (Phases 1–6)
+## What exists today (Phases 1–7)
 
 | Phase | Capability |
 | --- | --- |
@@ -16,8 +16,9 @@ Personal use. Not a public framework.
 | 4 | Tool-agnostic AI context files |
 | 5 | Optional modules: blog, analytics, email, admin, GitHub OAuth, Mongo adapter |
 | 6 | SEO profile: richer metadata, schema, robots/sitemap, blog markup, tools, programmatic topics |
+| 7 | Local CLI project generator (`npm run create`) — standalone apps from selected modules |
 
-Later phases (CLI) are **not built**. See `PLAN.md`. Do not implement them unless asked.
+Do not implement unbuilt `PLAN.md` phases unless asked.
 
 ---
 

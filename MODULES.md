@@ -82,7 +82,17 @@ Toggle extras with `modulesConfig.seoProfile` (`src/config/modules.ts`). Core `b
 
 **Use when:** search-led or micro-niche sites. Turn `seoProfile` off so SaaS builds skip tools/topics.
 
-**Not modules yet:** project CLI (`PLAN.md` Phase 7).
+## Project generator (Phase 7)
+
+Local CLI in `generator/`. Source of generated files is this repo’s `src/` plus small writers for coupling files (`package.json`, env, layout, nav, auth/payment variants).
+
+```bash
+npm run create
+```
+
+Add a future module by: implementing it in LaunchKit, listing its files/deps in `generator/src/catalog.ts`, and teaching the CLI flags if it needs a new choice.
+
+**Not built:** web GUI, hosted LaunchKit, licensing.
 
 ---
 

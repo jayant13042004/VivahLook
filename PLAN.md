@@ -348,30 +348,27 @@ Toggle extras with `modulesConfig.seoProfile` (off for lean SaaS). Core `buildMe
 
 ## Phase 7 — Project Creator
 
-Eventually create an internal interface or CLI.
+> Status: **Implemented** in this repo (local CLI).
 
-The user flow:
+Local generator that creates a **standalone** Next.js project from selected modules. It does not copy this whole repo and delete files; it copies a core template plus only the chosen module files, then writes config/deps/env for that selection.
 
-1. Choose project type.
-2. Describe the project.
-3. Select required features.
-4. Choose optional integrations.
-5. Generate a clean project.
+```bash
+npm run create
+```
 
-Example:
+Non-interactive example:
 
-> Project: AI CSV cleaning tool
+```bash
+npm run create -- --yes --name "My App" --profile saas --auth email,google --database supabase --payments stripe
+```
 
-Selected configuration:
+Profiles: `saas`, `micro-niche`, `ai-web-app`.
 
-- SaaS profile
-- Google authentication
-- Supabase
-- Razorpay
-- Vercel
-- Blog
+Selectable modules match what exists here: auth (none / email / Google / GitHub), database (none / Supabase / MongoDB / both), payments (none / Stripe / Razorpay), blog, analytics, email, admin, SEO profile.
 
-The generated project should only contain the required code.
+Generated apps do not depend on LaunchKit at runtime. Usage: `DOCUMENTATION.md` (Phase 7).
+
+Not in this phase: web GUI, hosted SaaS, licensing.
 
 ---
 

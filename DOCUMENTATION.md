@@ -1,6 +1,6 @@
 # LaunchKit Documentation
 
-**Status:** Phase 6 complete (Foundation + Auth + Payments + AI context + optional modules + SEO profile)
+**Status:** Phase 7 complete (Foundation + Auth + Payments + AI context + optional modules + SEO profile + local project CLI)
 
 Quick reference for using and customizing what is built.
 
@@ -235,6 +235,50 @@ When `seoProfile` is `true`:
 - `/tools` and `/tools/[slug]` — add rows in `src/content/tools.ts`
 - `/topics` and `/topics/[slug]` — add rows in `src/content/topics.ts` (programmatic pages)
 - Those URLs are included in the sitemap and in the main nav
+
+---
+
+## Phase 7 — Project generator (local CLI)
+
+Creates a **standalone** Next.js project with only the modules you pick. The new app has its own `package.json` and `.env.example` and does not import LaunchKit.
+
+```bash
+npm install
+npm run create
+```
+
+The CLI asks for project name, profile, auth, database, payments, optional modules, then a review step.
+
+### Profiles
+
+| Profile | Typical starting point (you can change every option) |
+| --- | --- |
+| `saas` | Email + Google auth, Supabase, analytics, email, admin |
+| `micro-niche` | Blog + SEO profile + analytics, no auth |
+| `ai-web-app` | Email + Google auth, Supabase, analytics, email |
+
+### Options (only what exists in LaunchKit)
+
+| Choice | Values |
+| --- | --- |
+| Auth | `none` or any of `email`, `google`, `github` |
+| Database | `none`, `supabase`, `mongodb`, `both` (Mongo is extra product data; auth/payments still use Supabase) |
+| Payments | `none` or `stripe` and/or `razorpay` (requires auth + Supabase) |
+| Flags | `blog`, `analytics`, `email`, `admin`, `seo` |
+
+Auth, payments, and admin imply Supabase even if you picked `database=none`.
+
+### Non-interactive
+
+```bash
+npm run create -- --yes --name "My App" --profile saas --auth email,google --database supabase --payments stripe --out ../my-app
+```
+
+`--flags none` turns off optional modules. Omit `--flags` to keep the profile defaults.
+
+After generation: `cd` into the folder, copy `.env.example` to `.env.local`, `npm install`, `npm run dev`.
+
+To add a future module: build it in this repo, then register files and npm packages in `generator/src/catalog.ts`.
 
 ---
 
