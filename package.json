@@ -1,13 +1,12 @@
 {
-  "name": "personal-launch-engine",
+  "name": "vivahlook",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "create": "node generator/node_modules/tsx/dist/cli.mjs generator/src/cli.ts"
+    "lint": "eslint"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.5",
