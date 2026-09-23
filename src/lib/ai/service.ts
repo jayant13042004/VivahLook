@@ -64,7 +64,8 @@ async function generateWithGemini(
   request: WeddingLookRequest,
   prompt: string,
 ): Promise<WeddingLookResponse> {
-  const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${GEMINI_API_KEY}`;
+  // gemini-2.5-flash-image: supports image input + image output generation
+  const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent?key=${GEMINI_API_KEY}`;
 
   const response = await fetch(apiUrl, {
     method: "POST",
@@ -101,9 +102,18 @@ async function generateWithGemini(
       };
     }
 
+    // Parse the error for a cleaner message
+    let apiErrorMsg = `Gemini API error ${response.status}`;
+    try {
+      const errJson = JSON.parse(errorText);
+      if (errJson?.error?.message) apiErrorMsg = errJson.error.message;
+    } catch {
+      // keep generic message
+    }
+
     return {
       success: false,
-      error: "We couldn't create your look this time. Please try again.",
+      error: `We couldn't create your look. (${apiErrorMsg})`,
     };
   }
 
