@@ -86,6 +86,8 @@ export function StudioWizard() {
       const response = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        // 5 min timeout — waterfall can try up to 5 models × 90s each
+        signal: AbortSignal.timeout(300_000),
         body: JSON.stringify({
           imageBase64: state.imageBase64,
           mimeType: state.mimeType,
@@ -107,8 +109,11 @@ export function StudioWizard() {
       incrementUsage();
       setState((s) => ({ ...s, styleId, resultImageBase64: data.imageBase64 ?? "" }));
       setStep("result");
-    } catch {
-      setError("Something went wrong with the connection. Please try again.");
+    } catch (err) {
+      const msg = err instanceof Error && err.name === "TimeoutError"
+        ? "Generation timed out — all AI models were busy. Please try again."
+        : "Something went wrong with the connection. Please try again.";
+      setError(msg);
       setStep("style");
     }
   }, [state.imageBase64, state.mimeType, state.gender, state.occasionId, state.outfitId]);

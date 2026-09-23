@@ -4,10 +4,13 @@ import { useState, useEffect } from "react";
 
 const MESSAGES = [
   "Preparing your photo...",
+  "Selecting the best AI model...",
   "Crafting your wedding look...",
-  "Styling your outfit...",
+  "Draping your chosen outfit...",
+  "Styling the details...",
   "Adding finishing touches...",
-  "Almost ready...",
+  "Polishing your look...",
+  "Almost there...",
 ];
 
 export function GenerationLoader() {
@@ -16,7 +19,7 @@ export function GenerationLoader() {
   useEffect(() => {
     const interval = setInterval(() => {
       setMessageIndex((prev) => (prev + 1) % MESSAGES.length);
-    }, 3000);
+    }, 3500);
     return () => clearInterval(interval);
   }, []);
 
@@ -37,8 +40,8 @@ export function GenerationLoader() {
         {MESSAGES[messageIndex]}
       </p>
 
-      <p className="mt-8 text-xs text-muted-foreground/60">
-        This may take up to a minute
+      <p className="mt-8 text-xs text-muted-foreground/60 text-center max-w-xs">
+        This may take up to 2 minutes — we automatically try multiple AI models to get you the best result.
       </p>
     </div>
   );
