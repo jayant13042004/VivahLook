@@ -175,9 +175,12 @@ export async function getMySubscription(userId: string) {
 }
 
 export function formatMoney(amount: number, currency: string) {
-  return new Intl.NumberFormat("en-US", {
+  const isINR = currency.toUpperCase() === "INR";
+  return new Intl.NumberFormat(isINR ? "en-IN" : "en-US", {
     style: "currency",
     currency: currency.toUpperCase(),
+    minimumFractionDigits: isINR ? 0 : 2,
+    maximumFractionDigits: isINR ? 0 : 2,
   }).format(amount / 100);
 }
 

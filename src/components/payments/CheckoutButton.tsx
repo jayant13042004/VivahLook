@@ -4,20 +4,17 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { startCheckout } from "@/app/billing/actions";
 import { Button } from "@/components/ui/Button";
-import type { PaymentProviderId } from "@/config/payments";
 import type { RazorpayCheckoutPayload } from "@/lib/payments/razorpay";
 
 type CheckoutButtonProps = {
   productId: string;
-  provider: PaymentProviderId;
-  label: string;
+  label?: string;
   disabled?: boolean;
 };
 
 export function CheckoutButton({
   productId,
-  provider,
-  label,
+  label = "Pay with Razorpay",
   disabled,
 }: CheckoutButtonProps) {
   const router = useRouter();
@@ -28,15 +25,12 @@ export function CheckoutButton({
     setError(null);
     setPending(true);
     try {
-      const result = await startCheckout(productId, provider);
+      const result = await startCheckout(productId);
       if ("error" in result) {
         setError(result.error);
         return;
       }
-      if (result.type === "redirect") {
-        window.location.assign(result.url);
-        return;
-      }
+
       await openRazorpay(result.checkout, () => {
         router.push("/billing?checkout=success");
       });
@@ -49,8 +43,13 @@ export function CheckoutButton({
 
   return (
     <div className="space-y-2">
-      <Button type="button" onClick={onClick} disabled={disabled || pending} className="w-full">
-        {pending ? "Starting checkout…" : label}
+      <Button
+        type="button"
+        onClick={onClick}
+        disabled={disabled || pending}
+        className="w-full"
+      >
+        {pending ? "Preparing checkout…" : label}
       </Button>
       {error ? (
         <p className="text-sm text-danger" role="alert">
@@ -62,12 +61,13 @@ export function CheckoutButton({
 }
 
 async function loadRazorpayScript() {
-  if (window.Razorpay) return;
+  if (typeof window !== "undefined" && window.Razorpay) return;
   await new Promise<void>((resolve, reject) => {
     const script = document.createElement("script");
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
     script.onload = () => resolve();
-    script.onerror = () => reject(new Error("Could not load Razorpay checkout."));
+    script.onerror = () =>
+      reject(new Error("Could not load Razorpay checkout SDK."));
     document.body.appendChild(script);
   });
 }
@@ -90,7 +90,6 @@ async function openRazorpay(
       name: checkout.name,
       description: checkout.description,
       order_id: checkout.orderId,
-      subscription_id: checkout.subscriptionId,
       handler: async (response) => {
         const verify = await fetch("/api/payments/razorpay/verify", {
           method: "POST",

@@ -3,14 +3,22 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getMainNav } from "@/config/navigation";
-import { siteConfig } from "@/config/site";
+import { VaaraaLogo } from "@/components/brand/VaaraaLogo";
 import { Container } from "@/components/ui/Container";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { MobileNavbarAuth, NavbarAuth } from "@/components/auth/NavbarAuth";
 import { cn } from "@/lib/utils";
 
-/** Site header with desktop links + mobile menu. */
+const NAV_LINKS = [
+  { label: "Home", href: "/" },
+  { label: "How It Works", href: "/#how-it-works" },
+  { label: "Occasions", href: "/#occasions" },
+  { label: "Outfits", href: "/#outfits" },
+  { label: "Pricing", href: "/#pricing" },
+  { label: "FAQ", href: "/#faq" },
+];
+
+/** Editorial header with Vaaraa branding, desktop navigation, Try Free pill, and mobile drawer. */
 export function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -27,31 +35,24 @@ export function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border/80 bg-background/80 backdrop-blur-md">
-      <Container className="flex h-16 items-center justify-between gap-4">
-        <Link
-          href="/"
-          onClick={closeMenu}
-          className="font-display text-lg font-semibold tracking-tight text-foreground transition-opacity hover:opacity-80"
-        >
-          {siteConfig.shortName}
-        </Link>
+    <header className="sticky top-0 z-50 border-b border-border/80 bg-background/90 backdrop-blur-md transition-colors">
+      <Container className="flex h-20 items-center justify-between gap-6">
+        {/* Brand Logo */}
+        <VaaraaLogo size="md" />
 
-        <nav className="hidden items-center gap-1 md:flex" aria-label="Main">
-          {getMainNav().map((item) => {
-            const active =
-              item.href === "/"
-                ? pathname === "/"
-                : pathname.startsWith(item.href);
+        {/* Desktop Navigation */}
+        <nav className="hidden items-center gap-7 md:flex" aria-label="Main Navigation">
+          {NAV_LINKS.map((item) => {
+            const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
             return (
               <Link
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                  "relative text-sm font-medium transition-colors hover:text-foreground",
                   active
-                    ? "bg-muted text-foreground"
-                    : "text-muted-foreground hover:bg-muted/70 hover:text-foreground",
+                    ? "text-foreground font-semibold after:absolute after:-bottom-1.5 after:left-0 after:right-0 after:h-[2px] after:bg-primary after:rounded-full"
+                    : "text-muted-foreground",
                 )}
               >
                 {item.label}
@@ -60,12 +61,22 @@ export function Navbar() {
           })}
         </nav>
 
-        <div className="flex items-center gap-2">
-          <NavbarAuth />
+        {/* Right CTA Area */}
+        <div className="flex items-center gap-4">
           <ThemeToggle />
+          <NavbarAuth />
+          <Link
+            href="/studio"
+            className="hidden sm:inline-flex items-center justify-center gap-1.5 px-6 py-2.5 text-xs font-semibold uppercase tracking-wider bg-primary text-primary-foreground rounded-full hover:opacity-95 transition-all shadow-sm hover:shadow-md"
+          >
+            <span>Try Free</span>
+            <span aria-hidden="true">→</span>
+          </Link>
+
+          {/* Mobile Menu Toggle */}
           <button
             type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border bg-surface text-foreground md:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-surface text-foreground md:hidden hover:bg-muted/50 transition-colors"
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-label={open ? "Close menu" : "Open menu"}
@@ -76,36 +87,35 @@ export function Navbar() {
         </div>
       </Container>
 
+      {/* Mobile Drawer */}
       <div
         id="mobile-nav"
         className={cn(
-          "border-t border-border bg-background md:hidden",
+          "border-t border-border bg-background/98 backdrop-blur-lg md:hidden",
           open ? "block animate-fade-in" : "hidden",
         )}
       >
-        <Container className="flex flex-col gap-1 py-4">
-          {getMainNav().map((item) => {
-            const active =
-              item.href === "/"
-                ? pathname === "/"
-                : pathname.startsWith(item.href);
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={closeMenu}
-                className={cn(
-                  "rounded-md px-3 py-3 text-base font-medium",
-                  active
-                    ? "bg-muted text-foreground"
-                    : "text-muted-foreground hover:bg-muted/70 hover:text-foreground",
-                )}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-          <MobileNavbarAuth onNavigate={closeMenu} />
+        <Container className="flex flex-col gap-3 py-6">
+          <Link
+            href="/studio"
+            onClick={closeMenu}
+            className="w-full text-center py-3 bg-primary text-primary-foreground font-semibold rounded-full text-sm shadow-md"
+          >
+            Try Vaaraa Free →
+          </Link>
+          {NAV_LINKS.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              onClick={closeMenu}
+              className="rounded-xl px-4 py-3 text-base font-medium text-foreground hover:bg-muted/60 transition-colors"
+            >
+              {item.label}
+            </Link>
+          ))}
+          <div className="pt-4 mt-2 border-t border-border/60">
+            <MobileNavbarAuth onNavigate={closeMenu} />
+          </div>
         </Container>
       </div>
     </header>

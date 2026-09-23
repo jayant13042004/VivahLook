@@ -1,29 +1,25 @@
 /**
- * Site configuration — branding, URLs, and shared copy.
- *
- * Edit this file first when starting a new project from this starter.
+ * Site configuration — Vaaraa luxury Indian wedding fashion visualization.
  */
 
 export const siteConfig = {
-  name: "Personal Launch Engine",
-  shortName: "LaunchKit",
-  tagline: "Ship the next idea without rebuilding the foundation.",
+  name: "Vaaraa",
+  shortName: "Vaaraa",
+  tagline: "See Your Wedding Look",
   description:
-    "A reusable AI-first website starter with a clean design system, theming, SEO basics, and production-ready pages.",
+    "Upload your photo and preview stunning Indian wedding outfits before you buy. Experience royal sherwanis, bridal lehengas, silk sarees, and couture with AI-powered visualization.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
-  locale: "en_US",
-  creator: "Isagi",
-  contactEmail: "hello@example.com",
+  locale: "en_IN",
+  creator: "Vaaraa",
+  contactEmail: "concierge@vaaraa.com",
   copyrightYear: new Date().getFullYear(),
 
-  /** Social / external links shown in the footer. Leave empty arrays if unused. */
   social: [
-    { label: "GitHub", href: "https://github.com" },
-    { label: "X", href: "https://x.com" },
+    { label: "Instagram", href: "https://instagram.com/vaaraaofficial" },
+    { label: "Pinterest", href: "https://pinterest.com/vaaraaofficial" },
   ] as const,
 
-  /** Default Open Graph image path under /public (optional). */
-  ogImage: "/og.svg",
+  ogImage: "/images/editorial/media_1790118434652.jpg",
 } as const;
 
 export type SiteConfig = typeof siteConfig;

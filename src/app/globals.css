@@ -26,11 +26,18 @@
 
   --font-sans: var(--font-sans-family);
   --font-display: var(--font-display-family);
+  --font-serif: var(--font-serif-italic);
   --font-mono: var(--font-mono-family);
 
   --radius-sm: 0.375rem;
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
+}
+
+/* Luxury Editorial Accents */
+.font-editorial-italic {
+  font-family: var(--font-serif-italic), Georgia, serif;
+  font-style: italic;
 }
 
 html {

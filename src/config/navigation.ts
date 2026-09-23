@@ -1,6 +1,5 @@
 /**
- * Navigation links — used by Navbar and Footer.
- * Keep labels short; add/remove routes here when adding pages.
+ * Navigation links — VivahLook.
  */
 
 import { modulesConfig } from "@/config/modules";
@@ -8,33 +7,27 @@ import { modulesConfig } from "@/config/modules";
 export type NavItem = {
   label: string;
   href: string;
-  /** Hide from primary navbar (still usable in footer / sitemap). */
   footerOnly?: boolean;
 };
 
 export const mainNav: NavItem[] = [
   { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
+  { label: "Try Free", href: "/studio" },
+  { label: "How It Works", href: "/#how-it-works" },
   { label: "FAQ", href: "/faq" },
-  { label: "Contact", href: "/contact" },
 ];
 
 export const legalNav: NavItem[] = [
   { label: "Privacy Policy", href: "/privacy", footerOnly: true },
   { label: "Terms & Conditions", href: "/terms", footerOnly: true },
+  { label: "About", href: "/about", footerOnly: true },
+  { label: "Contact", href: "/contact", footerOnly: true },
 ];
 
-/** Public nav including optional modules (e.g. Blog). */
 export function getMainNav(): NavItem[] {
   const items = [...mainNav];
   if (modulesConfig.blog) {
-    items.splice(1, 0, { label: "Blog", href: "/blog" });
-  }
-  if (modulesConfig.seoProfile) {
-    items.push(
-      { label: "Tools", href: "/tools" },
-      { label: "Topics", href: "/topics" },
-    );
+    items.push({ label: "Blog", href: "/blog" });
   }
   return items;
 }

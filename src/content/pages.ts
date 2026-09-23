@@ -1,173 +1,189 @@
 /**
- * Page copy — edit text here instead of hunting through JSX.
- * Keep marketing/legal content centralized for AI and humans.
+ * Page copy — VivahLook content. Edit text here instead of in JSX.
  */
 
 export const homeContent = {
   hero: {
-    brand: "Personal Launch Engine",
-    headline: "A reusable foundation for every new product.",
+    brand: "VivahLook",
+    headline: "See Yourself in Your Perfect Wedding Look",
     supporting:
-      "Start with design, theming, SEO, and core pages already in place — then focus on the feature that matters.",
-    primaryCta: { label: "Get started", href: "/contact" },
-    secondaryCta: { label: "Learn more", href: "/about" },
+      "Upload your photo and preview stunning Indian wedding outfits before you buy. Try sherwanis, lehengas, sarees, and more.",
+    primaryCta: { label: "Try VivahLook Free", href: "/studio" },
+    secondaryCta: { label: "See How It Works", href: "/#how-it-works" },
   },
   features: {
-    title: "Built once. Reused many times.",
+    title: "How It Works",
     supporting:
-      "Common website infrastructure lives here so each new project inherits a proven baseline.",
+      "Three simple steps to see yourself in your dream wedding outfit.",
     items: [
       {
-        title: "Design system",
+        title: "01 — Upload Your Photo",
         description:
-          "Semantic colors, typography, and reusable UI primitives that stay consistent across pages.",
+          "Upload a clear, well-lit photo. We preserve your face, skin tone, and natural features.",
       },
       {
-        title: "Theme ready",
+        title: "02 — Choose Your Look",
         description:
-          "Light and dark modes with a single config file for brand colors on future projects.",
+          "Pick your wedding occasion, outfit type, and style. From royal sherwanis to pastel lehengas.",
       },
       {
-        title: "SEO foundation",
+        title: "03 — See Your Transformation",
         description:
-          "Metadata helpers, sitemap, and robots setup so launches start search-aware.",
-      },
-      {
-        title: "Core pages",
-        description:
-          "Home, About, Contact, FAQ, Privacy, and Terms — ready to customize, not rewrite.",
+          "Get a photorealistic visualization of yourself in your chosen wedding outfit. Download and share.",
       },
     ],
   },
   cta: {
-    title: "Ready to launch the next idea?",
+    title: "Your wedding. Your style. See it before you wear it.",
     supporting:
-      "Use this starter as your default baseline. Customize branding, ship the unique product work.",
-    button: { label: "Contact", href: "/contact" },
+      "Join thousands discovering their perfect wedding look with VivahLook.",
+    button: { label: "Try Free Now", href: "/studio" },
   },
 } as const;
 
 export const aboutContent = {
-  title: "About",
-  description: "Why Personal Launch Engine exists and how to use it.",
+  title: "About VivahLook",
+  description: "The story behind VivahLook and our mission.",
   intro:
-    "Personal Launch Engine is a private, reusable, AI-first website starter. It exists so common infrastructure is not rebuilt for every project.",
+    "VivahLook helps you visualize your perfect Indian wedding outfit before you buy or get it tailored. Upload your photo, pick an occasion and outfit, and see a realistic preview of yourself.",
   sections: [
     {
-      title: "The problem",
-      body: "Every new site tends to recreate the same pieces: navigation, theming, legal pages, SEO basics, and loading/error states. That burns time and AI context on work that should already be solved.",
+      title: "Why VivahLook?",
+      body: "Shopping for wedding outfits is exciting but overwhelming. Should you go with a royal sherwani or a modern bandhgala? A traditional red lehenga or a pastel saree? VivahLook lets you see yourself in different looks so you can make confident choices — without visiting dozens of stores.",
     },
     {
-      title: "The approach",
-      body: "Build a clean foundation once. Keep configuration centralized. Prefer reusable components. Add optional modules later only when a project needs them.",
+      title: "How it works",
+      body: "Our AI-powered visualization technology creates photorealistic images of you wearing different wedding outfits. We preserve your face, skin tone, and natural features while showing you in beautifully styled wedding attire appropriate for each ceremony — from Haldi to Reception.",
     },
     {
-      title: "What Phase 1 includes",
-      body: "A production-quality frontend foundation: design system, light/dark mode, responsive layout, core marketing and legal pages, reusable states, and basic SEO — with no auth, database, or payments yet.",
+      title: "Your privacy matters",
+      body: "We take your privacy seriously. Uploaded photos are used only for generating your wedding looks and are not used for AI training. You can request deletion of your data at any time through our contact page.",
     },
   ],
 } as const;
 
 export const contactContent = {
-  title: "Contact",
-  description: "Reach out about a project, question, or customization need.",
+  title: "Contact Us",
+  description: "Get in touch with the VivahLook team.",
   intro:
-    "Send a message using the form below. If Resend is configured, the message is emailed. Otherwise it is validated locally only.",
+    "Have a question, feedback, or need help? We would love to hear from you.",
   fields: {
     name: { label: "Name", placeholder: "Your name" },
     email: { label: "Email", placeholder: "you@example.com" },
     message: { label: "Message", placeholder: "How can we help?" },
   },
-  submitLabel: "Send message",
-  successTitle: "Message received",
+  submitLabel: "Send Message",
+  successTitle: "Message Sent",
   successBody:
-    "Thanks — if email is configured, we sent it. If not, the form still validates locally.",
+    "Thank you for reaching out. We will get back to you as soon as possible.",
 } as const;
 
 export const faqContent = {
-  title: "FAQ",
-  description: "Common questions about Personal Launch Engine.",
+  title: "Frequently Asked Questions",
+  description: "Common questions about VivahLook.",
   items: [
     {
-      question: "What is Personal Launch Engine?",
+      question: "Is VivahLook free?",
       answer:
-        "A reusable Next.js starter for personal projects. It provides UI foundations, theming, core pages, and SEO basics so new products start further ahead.",
+        "Yes! You get 2 free wedding look generations. After that, you can purchase affordable look packs starting at ₹99 for 10 looks.",
     },
     {
-      question: "Can I change the brand and colors?",
+      question: "Do I need to create an account?",
       answer:
-        "Yes. Update src/config/site.ts for branding and src/config/theme.ts for colors. Most pages and components read from those configs.",
+        "No, you can generate your first wedding looks without creating an account. Sign up only when you want to save your looks, view history, or purchase additional generations.",
     },
     {
-      question: "Does this include authentication or payments?",
+      question: "Can I download my generated images?",
       answer:
-        "Yes. Auth (email, Google, optional GitHub), Stripe/Razorpay billing, optional blog, analytics, email, and admin. Toggle extras in src/config/modules.ts.",
+        "Yes. Every generated look can be downloaded. Free looks include a subtle VivahLook watermark. Paid packs include unwatermarked HD downloads.",
     },
     {
-      question: "Is this meant for AI coding tools?",
+      question: "What happens to my uploaded photos?",
       answer:
-        "Yes. Clear folders, config-driven branding, and documentation conventions are intentional so AI tools can navigate and extend the codebase with less context.",
+        "Your photos are processed securely on our servers and used only for generating your wedding looks. We do not sell your photos or use them for AI model training. Photos are retained temporarily for your session and you can request deletion at any time.",
     },
     {
-      question: "How do I add a new page?",
+      question: "What occasions and outfits are supported?",
       answer:
-        "Create a route under src/app, add the link in src/config/navigation.ts, and reuse layout primitives like Container, Section, and PageHeader.",
+        "We support Haldi, Mehendi, Sangeet, Wedding, Reception, and Guest occasions. Outfits include Sherwani, Kurta Pajama, Bandhgala, Indo-Western, and Dhoti Kurta for men, and Lehenga, Saree, Anarkali, Sharara, and Indo-Western for women.",
+    },
+    {
+      question: "How realistic are the generated images?",
+      answer:
+        "Our AI technology creates photorealistic visualizations that preserve your facial features, skin tone, and body proportions while showing you in beautifully styled wedding attire. Results vary based on photo quality — we recommend clear, well-lit photos with your face visible.",
+    },
+    {
+      question: "Can I share my generated looks?",
+      answer:
+        "Absolutely! Every generated look has share and download buttons. Share directly to WhatsApp, Instagram, or any other platform.",
     },
   ],
 } as const;
 
 export const privacyContent = {
   title: "Privacy Policy",
-  description: "How this site handles information.",
-  lastUpdated: "September 2, 2026",
+  description: "How VivahLook handles your information and photos.",
+  lastUpdated: "September 23, 2026",
   sections: [
     {
       title: "Overview",
-      body: "This Privacy Policy explains what information may be collected when you use this website and how it may be used. Replace this placeholder text with your project's actual policy before launch.",
+      body: "VivahLook is committed to protecting your privacy. This policy explains what information we collect, how we use it, and your rights regarding your data — especially your uploaded photographs.",
+    },
+    {
+      title: "Photos you upload",
+      body: "When you upload a photo to generate a wedding look, it is processed securely on our servers. Your photos are used exclusively for generating your requested wedding visualizations. We do not sell, share, or use your photos for AI model training. Uploaded photos are retained temporarily for your active session and are automatically deleted thereafter.",
     },
     {
       title: "Information we collect",
-      body: "Depending on how you use the site, we may collect information you voluntarily provide (such as name, email, and message content through a contact form) and basic technical data such as browser type or device information from analytics tools you choose to add later.",
+      body: "We collect information you voluntarily provide (such as email if you create an account, and contact form submissions), basic usage analytics (page views, generation counts), and technical data necessary for the service (browser type, device type). We use Razorpay for payment processing — payment card details are handled directly by Razorpay and never stored on our servers.",
     },
     {
       title: "How we use information",
-      body: "Information is used to respond to inquiries, improve the website, and operate the service. We do not sell personal information.",
+      body: "Information is used to provide the VivahLook service, process payments, improve the product experience, and respond to support requests. We do not sell personal information to third parties.",
     },
     {
-      title: "Cookies and analytics",
-      body: "This Phase 1 starter does not ship analytics by default. If you add cookies or analytics later, disclose them here and provide opt-out details where required.",
+      title: "Data deletion",
+      body: "You can request deletion of your account and all associated data at any time by contacting us through our Contact page. We will process deletion requests promptly.",
     },
     {
       title: "Contact",
-      body: "For privacy questions, contact the site owner using the Contact page or the email listed in site configuration.",
+      body: "For privacy questions or data deletion requests, please use our Contact page or email us at the address listed in our site footer.",
     },
   ],
 } as const;
 
 export const termsContent = {
   title: "Terms & Conditions",
-  description: "Terms of use for this website.",
-  lastUpdated: "September 2, 2026",
+  description: "Terms of use for VivahLook.",
+  lastUpdated: "September 23, 2026",
   sections: [
     {
       title: "Agreement",
-      body: "By accessing this website, you agree to these Terms & Conditions. If you do not agree, do not use the site. Replace this placeholder with counsel-reviewed terms before a public launch.",
+      body: "By using VivahLook, you agree to these Terms & Conditions. If you do not agree, please do not use the service.",
     },
     {
-      title: "Use of the site",
-      body: "You may use this website for lawful purposes only. You agree not to misuse the site, attempt unauthorized access, or interfere with its operation.",
+      title: "The service",
+      body: "VivahLook provides AI-powered wedding outfit visualization. You upload a photo, select wedding occasion and outfit preferences, and receive a generated image showing you in that outfit. Results are AI-generated visualizations and may not perfectly represent actual clothing or accessories.",
+    },
+    {
+      title: "Acceptable use",
+      body: "You may use VivahLook only for lawful, personal purposes. You must not upload images of other people without their consent, upload inappropriate or offensive content, attempt to reverse-engineer the service, or use the service for any purpose other than personal wedding outfit visualization.",
+    },
+    {
+      title: "Payments and refunds",
+      body: "Paid look packs are processed through Razorpay. All prices are in Indian Rupees (INR). Credits are added to your account upon successful payment verification. Due to the nature of digital content generation, refunds are evaluated on a case-by-case basis.",
     },
     {
       title: "Intellectual property",
-      body: "Site content, branding, and materials are owned by the site operator or licensors unless otherwise stated. You may not copy or redistribute them without permission.",
+      body: "Generated images are created for your personal use. The VivahLook brand, logo, website design, and underlying technology are owned by VivahLook. You retain rights to your uploaded photos.",
     },
     {
-      title: "Disclaimer",
-      body: "The site is provided as-is without warranties of any kind. The operator is not liable for damages arising from use of the site to the fullest extent permitted by law.",
+      title: "Limitation of liability",
+      body: "VivahLook is provided as-is. We do not guarantee that generated images will match actual clothing. We are not liable for purchasing decisions made based on generated visualizations.",
     },
     {
       title: "Changes",
-      body: "These terms may be updated from time to time. Continued use of the site after changes constitutes acceptance of the updated terms.",
+      body: "These terms may be updated. Continued use after changes constitutes acceptance of updated terms.",
     },
   ],
 } as const;

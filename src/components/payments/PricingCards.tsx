@@ -1,80 +1,58 @@
 import { CheckoutButton } from "@/components/payments/CheckoutButton";
-import type { PaymentProduct, PaymentProviderId } from "@/config/payments";
-import { paymentsConfig } from "@/config/payments";
-import {
-  isRazorpayConfigured,
-  isStripeConfigured,
-} from "@/lib/payments/env";
-import { formatMoney } from "@/lib/payments/repository";
+import { paymentsConfig, formatINR } from "@/config/payments";
+import { isRazorpayConfigured } from "@/lib/payments/env";
 
-type PricingCardsProps = {
-  defaultProvider: PaymentProviderId;
-};
-
-export function PricingCards({ defaultProvider }: PricingCardsProps) {
-  const stripeOn = isStripeConfigured();
+export function PricingCards() {
   const razorpayOn = isRazorpayConfigured();
 
   return (
-    <ul className="mt-10 grid gap-6 lg:grid-cols-2">
-      {paymentsConfig.products.map((product) => (
+    <ul className="mt-10 grid gap-6 md:grid-cols-3">
+      {paymentsConfig.products.map((product, idx) => (
         <li
           key={product.id}
-          className="flex flex-col rounded-lg border border-border bg-surface p-6"
+          className={`flex flex-col justify-between rounded-2xl border p-6 bg-surface ${
+            idx === 1
+              ? "border-primary shadow-lg shadow-primary/10 ring-1 ring-primary"
+              : "border-border"
+          }`}
         >
-          <p className="text-sm font-medium text-primary">
-            {product.kind === "subscription" ? "Subscription" : "One-time"}
-          </p>
-          <h2 className="mt-2 font-display text-2xl font-semibold text-foreground">
-            {product.name}
-          </h2>
-          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-            {product.description}
-          </p>
-          <p className="mt-6 font-display text-3xl font-semibold text-foreground">
-            {formatDisplayPrice(product, defaultProvider)}
-            {product.kind === "subscription" ? (
-              <span className="ml-1 text-base font-medium text-muted-foreground">
-                /{product.interval ?? "month"}
+          <div>
+            {idx === 1 && (
+              <span className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold uppercase tracking-wider mb-3">
+                Most Popular
               </span>
-            ) : null}
-          </p>
+            )}
+            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              {product.looks} Looks Pack
+            </p>
+            <h2 className="mt-1 font-display text-2xl font-bold text-foreground">
+              {product.name}
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              {product.description}
+            </p>
+            <p className="mt-6 font-display text-3xl font-bold text-foreground">
+              {formatINR(product.razorpay.amount)}
+            </p>
+            <p className="text-xs text-muted-foreground mt-1">
+              ₹{(product.razorpay.amount / 100 / product.looks).toFixed(0)} per look
+            </p>
+          </div>
 
-          <div className="mt-8 space-y-3">
-            {stripeOn ? (
-              <CheckoutButton
-                productId={product.id}
-                provider="stripe"
-                label="Pay with Stripe"
-              />
-            ) : null}
+          <div className="mt-8">
             {razorpayOn ? (
               <CheckoutButton
                 productId={product.id}
-                provider="razorpay"
-                label={
-                  product.kind === "subscription" && !product.razorpay.planId
-                    ? "Razorpay plan ID missing"
-                    : "Pay with Razorpay"
-                }
-                disabled={
-                  product.kind === "subscription" && !product.razorpay.planId
-                }
+                label={`Get ${product.name}`}
               />
-            ) : null}
-            {!stripeOn && !razorpayOn ? (
-              <p className="text-sm text-muted-foreground">
-                Add Stripe or Razorpay keys to enable checkout.
+            ) : (
+              <p className="text-xs text-center text-muted-foreground py-2 border border-dashed border-border rounded-xl">
+                Razorpay keys needed in .env.local
               </p>
-            ) : null}
+            )}
           </div>
         </li>
       ))}
     </ul>
   );
-}
-
-function formatDisplayPrice(product: PaymentProduct, provider: PaymentProviderId) {
-  const offer = provider === "razorpay" ? product.razorpay : product.stripe;
-  return formatMoney(offer.amount, offer.currency);
 }

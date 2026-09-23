@@ -1,12 +1,12 @@
 /**
- * Payments configuration — products, default provider, display amounts.
+ * Payments configuration — VivahLook, Razorpay-only, INR pricing.
  *
- * Edit products here. Put Stripe Price IDs / Razorpay Plan IDs in env when you have them.
- * One-time Stripe/Razorpay checkouts work from amount + currency alone.
- * Razorpay subscriptions require RAZORPAY_PLAN_* in env (created in the Razorpay dashboard).
+ * Products are credit-pack based. Users buy look packs.
+ * Razorpay is the exclusive payment gateway for the Indian market.
+ * Architecture supports adding another gateway later if needed.
  */
 
-export const paymentProviders = ["stripe", "razorpay"] as const;
+export const paymentProviders = ["razorpay"] as const;
 export type PaymentProviderId = (typeof paymentProviders)[number];
 export type PaymentKind = "one_time" | "subscription";
 
@@ -16,13 +16,10 @@ export type PaymentProduct = {
   description: string;
   kind: PaymentKind;
   interval?: "month" | "year";
-  stripe: {
-    amount: number;
-    currency: string;
-    priceId?: string;
-  };
+  /** Number of looks/credits this pack grants */
+  looks: number;
   razorpay: {
-    amount: number;
+    amount: number; // in paise
     currency: string;
     planId?: string;
   };
@@ -33,35 +30,36 @@ export const paymentsConfig = {
   cancelPath: "/billing?checkout=canceled",
   products: [
     {
-      id: "starter",
-      name: "Starter",
-      description: "One-time purchase — good for launching a single product.",
+      id: "single_pack",
+      name: "Single Pack",
+      description: "10 wedding looks",
       kind: "one_time",
-      stripe: {
-        amount: 2900,
-        currency: "usd",
-        priceId: process.env.STRIPE_PRICE_STARTER,
-      },
+      looks: 10,
       razorpay: {
-        amount: 290000,
+        amount: 9900, // ₹99
         currency: "inr",
       },
     },
     {
-      id: "pro",
-      name: "Pro",
-      description: "Monthly subscription for ongoing product access.",
-      kind: "subscription",
-      interval: "month",
-      stripe: {
-        amount: 1900,
-        currency: "usd",
-        priceId: process.env.STRIPE_PRICE_PRO,
-      },
+      id: "wedding_pack",
+      name: "Wedding Pack",
+      description: "Complete 5-occasion wardrobe — Haldi, Mehendi, Sangeet, Wedding, Reception",
+      kind: "one_time",
+      looks: 20,
       razorpay: {
-        amount: 149900,
+        amount: 19900, // ₹199
         currency: "inr",
-        planId: process.env.RAZORPAY_PLAN_PRO,
+      },
+    },
+    {
+      id: "royal_hd",
+      name: "Royal HD Pack",
+      description: "30 HD looks + unwatermarked downloads",
+      kind: "one_time",
+      looks: 30,
+      razorpay: {
+        amount: 29900, // ₹299
+        currency: "inr",
       },
     },
   ] satisfies PaymentProduct[],
@@ -76,7 +74,15 @@ export function isPaymentProvider(value: string): value is PaymentProviderId {
 }
 
 export function getDefaultPaymentProvider(): PaymentProviderId {
-  const value = process.env.NEXT_PUBLIC_PAYMENT_PROVIDER;
-  if (value && isPaymentProvider(value)) return value;
-  return "stripe";
+  return "razorpay";
+}
+
+/** Format amount in paise to INR display string */
+export function formatINR(amountPaise: number): string {
+  return new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(amountPaise / 100);
 }

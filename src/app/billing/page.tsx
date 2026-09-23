@@ -3,27 +3,20 @@ import { DashboardNav } from "@/components/layout/DashboardNav";
 import { PricingCards } from "@/components/payments/PricingCards";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Section } from "@/components/ui/Section";
-import { Button } from "@/components/ui/Button";
-import { getDefaultPaymentProvider } from "@/config/payments";
-import { paymentsContent } from "@/content/payments";
 import { isAdminUser } from "@/lib/auth/admin";
 import { requireProfile } from "@/lib/auth/session";
-import { isPaymentsConfigured } from "@/lib/payments/env";
+import { isRazorpayConfigured } from "@/lib/payments/env";
 import {
   formatMoney,
-  getMySubscription,
-  getStripeCustomerId,
   listMyPayments,
   statusLabel,
 } from "@/lib/payments/repository";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
-import { isServiceRoleConfigured } from "@/lib/supabase/service";
 import { buildMetadata } from "@/lib/seo";
-import { openStripePortal } from "@/app/billing/actions";
 
 export const metadata = buildMetadata({
-  title: paymentsContent.billing.title,
-  description: paymentsContent.billing.description,
+  title: "Look Packs & Billing — VivahLook",
+  description: "Purchase VivahLook credit packs to generate more high-definition wedding outfits.",
   path: "/billing",
   noIndex: true,
 });
@@ -47,73 +40,47 @@ export default async function BillingPage({ searchParams }: BillingPageProps) {
 
   const { user, profile } = await requireProfile();
   const showAdmin = isAdminUser({ email: user.email, role: profile.role });
-  const [payments, subscription, stripeCustomerId] = await Promise.all([
-    listMyPayments(user.id),
-    getMySubscription(user.id),
-    isServiceRoleConfigured() ? getStripeCustomerId(user.id) : Promise.resolve(null),
-  ]);
+  const payments = await listMyPayments(user.id);
 
   const banner =
     checkout === "success"
-      ? paymentsContent.billing.checkoutSuccess
+      ? "Payment received! Your look credits have been added."
       : checkout === "canceled"
-        ? paymentsContent.billing.checkoutCanceled
+        ? "Checkout was canceled. You have not been charged."
         : null;
 
   return (
     <Section>
       <DashboardNav className="mb-8" showAdmin={showAdmin} />
       <PageHeader
-        title={paymentsContent.billing.title}
-        description={paymentsContent.billing.description}
+        title="VivahLook Packs"
+        description="Choose a pack to unlock more wedding outfits, HD downloads, and all ceremonies."
       />
 
       {banner ? (
-        <p className="mt-6 rounded-md border border-border bg-muted px-4 py-3 text-sm text-foreground">
+        <p className="mt-6 rounded-xl border border-border bg-surface px-4 py-3 text-sm text-foreground shadow-sm">
           {banner}
         </p>
       ) : null}
 
-      <div className="mt-10 rounded-lg border border-border bg-surface p-6">
-        <h2 className="font-display text-lg font-semibold text-foreground">
-          {paymentsContent.billing.currentPlan}
-        </h2>
-        {subscription ? (
-          <p className="mt-2 text-sm text-muted-foreground">
-            {subscription.product_id} · {statusLabel(subscription.status)}
-            {subscription.current_period_end
-              ? ` · renews ${new Date(subscription.current_period_end).toLocaleDateString()}`
-              : ""}
-          </p>
-        ) : (
-          <p className="mt-2 text-sm text-muted-foreground">
-            {paymentsContent.billing.noSubscription}
-          </p>
-        )}
-        {stripeCustomerId ? (
-          <form action={openStripePortal} className="mt-4">
-            <Button type="submit" variant="secondary" size="sm">
-              {paymentsContent.billing.manageStripe}
-            </Button>
-          </form>
-        ) : null}
-      </div>
-
-      {isPaymentsConfigured() ? (
-        <PricingCards defaultProvider={getDefaultPaymentProvider()} />
+      {isRazorpayConfigured() ? (
+        <PricingCards />
       ) : (
-        <p className="mt-10 rounded-lg border border-border bg-surface p-6 text-sm text-muted-foreground">
-          {paymentsContent.billing.setupDescription}
-        </p>
+        <div className="mt-10 rounded-2xl border border-border bg-surface p-6 text-sm text-muted-foreground">
+          <p className="font-semibold text-foreground mb-1">Razorpay Setup Required</p>
+          <p>
+            Add `NEXT_PUBLIC_RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET` to `.env.local` to enable secure UPI and Card checkout.
+          </p>
+        </div>
       )}
 
-      <div className="mt-12">
-        <h2 className="font-display text-xl font-semibold text-foreground">
-          {paymentsContent.billing.history}
+      <div className="mt-14">
+        <h2 className="font-display text-xl font-bold text-foreground">
+          Payment History
         </h2>
         {payments.length === 0 ? (
           <p className="mt-4 text-sm text-muted-foreground">
-            {paymentsContent.billing.emptyHistory}
+            No payments recorded yet.
           </p>
         ) : (
           <ul className="mt-4 divide-y divide-border border-y border-border">
@@ -124,13 +91,13 @@ export default async function BillingPage({ searchParams }: BillingPageProps) {
               >
                 <div>
                   <p className="text-sm font-medium text-foreground">
-                    {payment.product_id} · {payment.kind.replace("_", " ")}
+                    {payment.product_id}
                   </p>
                   <p className="text-xs text-muted-foreground">
-                    {payment.provider} · {new Date(payment.created_at).toLocaleString()}
+                    {payment.provider.toUpperCase()} · {new Date(payment.created_at).toLocaleString("en-IN")}
                   </p>
                 </div>
-                <p className="text-sm text-foreground">
+                <p className="text-sm font-semibold text-foreground">
                   {formatMoney(payment.amount, payment.currency)} · {statusLabel(payment.status)}
                 </p>
               </li>
