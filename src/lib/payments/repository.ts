@@ -118,28 +118,6 @@ export async function upsertSubscription(input: {
   }
 }
 
-export async function saveStripeCustomer(userId: string, customerId: string) {
-  const supabase = createServiceClient();
-  const { error } = await supabase.from("billing_customers").upsert({
-    user_id: userId,
-    stripe_customer_id: customerId,
-  });
-
-  if (error) {
-    console.error("saveStripeCustomer:", error.message);
-  }
-}
-
-export async function getStripeCustomerId(userId: string) {
-  const supabase = createServiceClient();
-  const { data } = await supabase
-    .from("billing_customers")
-    .select("stripe_customer_id")
-    .eq("user_id", userId)
-    .maybeSingle();
-
-  return data?.stripe_customer_id ?? null;
-}
 
 export async function listMyPayments(userId: string) {
   const supabase = await createClient();

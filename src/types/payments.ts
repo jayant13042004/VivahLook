@@ -8,7 +8,7 @@ export type PaymentStatus =
   | "past_due";
 
 export type PaymentKind = "one_time" | "subscription";
-export type PaymentProviderId = "stripe" | "razorpay";
+export type PaymentProviderId = "razorpay";
 
 export type PaymentRecord = {
   id: string;
@@ -38,6 +38,5 @@ export type BillingSubscription = {
 
 export type BillingCustomer = {
   user_id: string;
-  stripe_customer_id: string | null;
   razorpay_customer_id: string | null;
 };
