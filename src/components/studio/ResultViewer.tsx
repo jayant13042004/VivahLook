@@ -25,15 +25,20 @@ export function ResultViewer({
   const outfit = getOutfitById(outfitId);
   const style = getStyleById(styleId);
 
+  const getImageSrc = useCallback((base64: string) => {
+    if (!base64) return "";
+    return base64.startsWith("data:") ? base64 : `data:image/jpeg;base64,${base64}`;
+  }, []);
+
   const handleDownload = useCallback(() => {
     if (!resultImageBase64) return;
     const link = document.createElement("a");
-    link.href = `data:image/png;base64,${resultImageBase64}`;
-    link.download = `vivahlook-${occasion?.label ?? "wedding"}-${outfit?.label ?? "look"}.png`;
+    link.href = getImageSrc(resultImageBase64);
+    link.download = `vivahlook-${occasion?.label ?? "wedding"}-${outfit?.label ?? "look"}.jpg`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-  }, [resultImageBase64, occasion, outfit]);
+  }, [resultImageBase64, occasion, outfit, getImageSrc]);
 
   const handleShare = useCallback(async () => {
     if (!resultImageBase64) return;
@@ -41,8 +46,8 @@ export function ResultViewer({
     try {
       // Try native Web Share API first
       if (navigator.share) {
-        const blob = await fetch(`data:image/png;base64,${resultImageBase64}`).then((r) => r.blob());
-        const file = new File([blob], "vivahlook-wedding-look.png", { type: "image/png" });
+        const blob = await fetch(getImageSrc(resultImageBase64)).then((r) => r.blob());
+        const file = new File([blob], "vivahlook-wedding-look.jpg", { type: "image/jpeg" });
         await navigator.share({
           title: "My VivahLook Wedding Look",
           text: `Check out my ${occasion?.label ?? "wedding"} look in a ${outfit?.label ?? "beautiful outfit"}! Created with VivahLook.`,
@@ -56,7 +61,7 @@ export function ResultViewer({
     } catch {
       // User cancelled share or API not available
     }
-  }, [resultImageBase64, occasion, outfit]);
+  }, [resultImageBase64, occasion, outfit, getImageSrc]);
 
   return (
     <div className="max-w-2xl mx-auto w-full px-4 py-8">
@@ -64,7 +69,7 @@ export function ResultViewer({
       <div className="w-full max-w-md mx-auto rounded-2xl overflow-hidden shadow-xl border border-border">
         {resultImageBase64 ? (
           <img
-            src={`data:image/png;base64,${resultImageBase64}`}
+            src={getImageSrc(resultImageBase64)}
             alt={`${occasion?.label ?? "Wedding"} look in ${outfit?.label ?? "outfit"}`}
             className="w-full aspect-[3/4] object-cover"
           />
