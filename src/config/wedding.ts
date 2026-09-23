@@ -180,8 +180,8 @@ export function getStyleById(id: string): Style | undefined {
 
 /** Usage & pricing configuration */
 export const usageConfig = {
-  /** Free generations per visitor (tracked via cookie) */
-  freeGenerationLimit: 2,
+  /** Free generations per visitor */
+  freeGenerationLimit: 5,
   /** Max file upload size in bytes (10MB) */
   maxUploadSizeBytes: 10 * 1024 * 1024,
   /** Supported image MIME types */

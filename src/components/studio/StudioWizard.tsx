@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import Link from "next/link";
 import type { Gender } from "@/config/wedding";
 import { UploadStep } from "@/components/studio/UploadStep";
 import { OccasionStep } from "@/components/studio/OccasionStep";
@@ -8,7 +9,7 @@ import { OutfitStep } from "@/components/studio/OutfitStep";
 import { StyleStep } from "@/components/studio/StyleStep";
 import { GenerationLoader } from "@/components/studio/GenerationLoader";
 import { ResultViewer } from "@/components/studio/ResultViewer";
-import { incrementUsage, hasReachedLimit, getRemainingLooks } from "@/lib/usage";
+import { incrementUsage, hasReachedLimit, getRemainingLooks, resetUsage } from "@/lib/usage";
 
 type StudioStep = "upload" | "occasion" | "outfit" | "style" | "generating" | "result";
 
@@ -44,27 +45,36 @@ export function StudioWizard() {
     const idx = STEP_ORDER.indexOf(step);
     if (idx > 0 && step !== "generating" && step !== "result") {
       setStep(STEP_ORDER[idx - 1]);
+      setError("");
     }
   }, [step]);
+
+  const handleResetUsage = useCallback(() => {
+    resetUsage();
+    setError("");
+  }, []);
 
   const handleUploadComplete = useCallback((imageBase64: string, mimeType: string) => {
     setState((s) => ({ ...s, imageBase64, mimeType }));
     setStep("occasion");
+    setError("");
   }, []);
 
   const handleOccasionSelect = useCallback((occasionId: string) => {
     setState((s) => ({ ...s, occasionId }));
     setStep("outfit");
+    setError("");
   }, []);
 
   const handleOutfitSelect = useCallback((outfitId: string, gender: Gender) => {
     setState((s) => ({ ...s, outfitId, gender }));
     setStep("style");
+    setError("");
   }, []);
 
   const handleStyleSelect = useCallback(async (styleId: string) => {
     if (hasReachedLimit()) {
-      setError("You've used your free looks. Upgrade packs coming soon!");
+      setError("You've reached the free trial limit. Upgrade to a look pack to continue, or reset your trial below.");
       return;
     }
 
@@ -98,7 +108,7 @@ export function StudioWizard() {
       setState((s) => ({ ...s, styleId, resultImageBase64: data.imageBase64 ?? "" }));
       setStep("result");
     } catch {
-      setError("Something went wrong. Please try again.");
+      setError("Something went wrong with the connection. Please try again.");
       setStep("style");
     }
   }, [state.imageBase64, state.mimeType, state.gender, state.occasionId, state.outfitId]);
@@ -150,19 +160,40 @@ export function StudioWizard() {
               </button>
             )}
           </div>
-          {remaining > 0 && (
+          <div className="flex items-center gap-3">
             <span className="text-xs text-muted-foreground">
-              {remaining} free {remaining === 1 ? "look" : "looks"} remaining
+              {remaining} {remaining === 1 ? "look" : "looks"} available
             </span>
-          )}
+            <button
+              onClick={handleResetUsage}
+              className="text-[11px] text-muted-foreground/70 hover:text-primary transition-colors underline"
+              title="Reset looks for testing"
+            >
+              Reset
+            </button>
+          </div>
         </div>
       )}
 
-      {/* Error display */}
+      {/* Error display with direct Reset button */}
       {error && step !== "generating" && (
         <div className="max-w-2xl mx-auto w-full px-4 pb-4">
-          <div className="bg-danger/10 border border-danger/20 text-danger rounded-lg px-4 py-3 text-sm">
-            {error}
+          <div className="bg-danger/10 border border-danger/20 text-danger rounded-xl px-4 py-3 text-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <span>{error}</span>
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                onClick={handleResetUsage}
+                className="px-3 py-1 bg-surface border border-border text-foreground hover:bg-muted text-xs font-semibold rounded-lg transition-colors shadow-sm"
+              >
+                Reset Trial Looks
+              </button>
+              <Link
+                href="/billing"
+                className="px-3 py-1 bg-primary text-primary-foreground hover:opacity-90 text-xs font-semibold rounded-lg transition-opacity shadow-sm"
+              >
+                View Packs (₹99)
+              </Link>
+            </div>
           </div>
         </div>
       )}
