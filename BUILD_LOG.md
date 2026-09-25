@@ -74,6 +74,13 @@ All changes made to the codebase are chronologically documented here with ration
 
 ---
 
+## Entry: 2026-09-25 — Windows Environment Fix: Webpack Flag
+- **Problem:** Next.js 16 defaults to Turbopack (`next dev`). On Windows machines with SmartAppControl/Application Control policies enabled, loading native `.node` binaries (`next-swc.win32-x64-msvc.node`) is restricted, causing Turbopack to error.
+- **Solution:** Updated `package.json` scripts to `"dev": "next dev --webpack"` and `"build": "next build --webpack"`.
+- **Verification:** Runs cleanly with Webpack on Windows without Turbopack native binary errors.
+
+---
+
 ## Verification & Checks
 - TypeScript: `npx tsc --noEmit` → PASS (0 errors)
 - Production Build: `npm run build` → PASS (20 routes compiled)
