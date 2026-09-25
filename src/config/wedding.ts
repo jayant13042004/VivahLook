@@ -178,10 +178,14 @@ export function getStyleById(id: string): Style | undefined {
   return styles.find((s) => s.id === id);
 }
 
-/** Usage & pricing configuration */
+// Re-export full outfit catalog
+export { outfitCatalog, getOutfitsByOccasion, getOutfitTemplateById } from "@/config/catalog";
+export type { OutfitTemplate } from "@/config/catalog";
+
+/** Centralized Usage & Tier Limits */
 export const usageConfig = {
-  /** Free generations per visitor */
-  freeGenerationLimit: 5,
+  /** Free generations per visitor (Initial experiment: 1 free look to showcase magic while preventing API abuse) */
+  freeGenerationLimit: 1,
   /** Max file upload size in bytes (10MB) */
   maxUploadSizeBytes: 10 * 1024 * 1024,
   /** Supported image MIME types */

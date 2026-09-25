@@ -30,11 +30,11 @@ export const paymentsConfig = {
   cancelPath: "/billing?checkout=canceled",
   products: [
     {
-      id: "single_pack",
-      name: "Single Pack",
-      description: "10 wedding looks",
+      id: "starter_pack",
+      name: "Starter Pack",
+      description: "5 wedding looks to try your favorite ceremonies",
       kind: "one_time",
-      looks: 10,
+      looks: 5,
       razorpay: {
         amount: 9900, // ₹99
         currency: "inr",
@@ -42,10 +42,10 @@ export const paymentsConfig = {
     },
     {
       id: "wedding_pack",
-      name: "Wedding Pack",
-      description: "Complete 5-occasion wardrobe — Haldi, Mehendi, Sangeet, Wedding, Reception",
+      name: "Wedding Wardrobe Pack",
+      description: "15 looks — complete wardrobe coverage from Haldi to Reception",
       kind: "one_time",
-      looks: 20,
+      looks: 15,
       razorpay: {
         amount: 19900, // ₹199
         currency: "inr",
@@ -53,8 +53,8 @@ export const paymentsConfig = {
     },
     {
       id: "royal_hd",
-      name: "Royal HD Pack",
-      description: "30 HD looks + unwatermarked downloads",
+      name: "Royal Couture HD Pack",
+      description: "30 HD looks + unwatermarked high-res downloads + priority styling",
       kind: "one_time",
       looks: 30,
       razorpay: {

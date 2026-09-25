@@ -10,6 +10,7 @@ import { StyleStep } from "@/components/studio/StyleStep";
 import { GenerationLoader } from "@/components/studio/GenerationLoader";
 import { ResultViewer } from "@/components/studio/ResultViewer";
 import { incrementUsage, hasReachedLimit, getRemainingLooks, resetUsage } from "@/lib/usage";
+import { trackProductEvent } from "@/lib/analytics/events";
 
 type StudioStep = "upload" | "occasion" | "outfit" | "style" | "generating" | "result";
 
@@ -58,18 +59,24 @@ export function StudioWizard() {
     setState((s) => ({ ...s, imageBase64, mimeType }));
     setStep("occasion");
     setError("");
+    trackProductEvent("photo_uploaded", {
+      sizeBytes: Math.round((imageBase64.length * 3) / 4),
+      mimeType,
+    });
   }, []);
 
   const handleOccasionSelect = useCallback((occasionId: string) => {
     setState((s) => ({ ...s, occasionId }));
     setStep("outfit");
     setError("");
+    trackProductEvent("occasion_selected", { occasionId });
   }, []);
 
   const handleOutfitSelect = useCallback((outfitId: string, gender: Gender) => {
     setState((s) => ({ ...s, outfitId, gender }));
     setStep("style");
     setError("");
+    trackProductEvent("outfit_selected", { outfitId, gender });
   }, []);
 
   const handleStyleSelect = useCallback(async (styleId: string) => {
@@ -81,6 +88,15 @@ export function StudioWizard() {
     setState((s) => ({ ...s, styleId }));
     setStep("generating");
     setError("");
+    trackProductEvent("style_selected", { styleId });
+    trackProductEvent("generation_started", {
+      occasionId: state.occasionId,
+      outfitId: state.outfitId,
+      styleId,
+      isTrial: getRemainingLooks() > 0,
+    });
+
+    const startTime = Date.now();
 
     try {
       const response = await fetch("/api/generate", {
@@ -101,20 +117,37 @@ export function StudioWizard() {
       const data = await response.json();
 
       if (!response.ok || !data.success) {
-        setError(data.error ?? "We couldn't create your look. Please try again.");
+        const errorMsg = data.error ?? "We couldn't create your look. Please try again.";
+        setError(errorMsg);
         setStep("style");
+        trackProductEvent("generation_failed", {
+          occasionId: state.occasionId,
+          outfitId: state.outfitId,
+          error: errorMsg,
+        });
         return;
       }
 
       incrementUsage();
       setState((s) => ({ ...s, styleId, resultImageBase64: data.imageBase64 ?? "" }));
       setStep("result");
+      trackProductEvent("generation_completed", {
+        occasionId: state.occasionId,
+        outfitId: state.outfitId,
+        durationMs: Date.now() - startTime,
+        provider: data.metadata?.provider || "ai_engine",
+      });
     } catch (err) {
       const msg = err instanceof Error && err.name === "TimeoutError"
         ? "Generation timed out — all AI models were busy. Please try again."
         : "Something went wrong with the connection. Please try again.";
       setError(msg);
       setStep("style");
+      trackProductEvent("generation_failed", {
+        occasionId: state.occasionId,
+        outfitId: state.outfitId,
+        error: msg,
+      });
     }
   }, [state.imageBase64, state.mimeType, state.gender, state.occasionId, state.outfitId]);
 
@@ -207,7 +240,12 @@ export function StudioWizard() {
       <div className="flex-1 flex flex-col">
         {step === "upload" && <UploadStep onComplete={handleUploadComplete} />}
         {step === "occasion" && <OccasionStep onSelect={handleOccasionSelect} />}
-        {step === "outfit" && <OutfitStep onSelect={handleOutfitSelect} />}
+        {step === "outfit" && (
+          <OutfitStep
+            occasionId={state.occasionId}
+            onSelect={handleOutfitSelect}
+          />
+        )}
         {step === "style" && <StyleStep onSelect={handleStyleSelect} />}
         {step === "generating" && <GenerationLoader />}
         {step === "result" && (

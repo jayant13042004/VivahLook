@@ -24,14 +24,14 @@ export function EmotionalBanner() {
           {/* Emotional Headline & Narrative (7 cols) */}
           <div className="lg:col-span-7 text-left">
             <p className="text-xs font-semibold tracking-[0.25em] text-accent uppercase mb-3">
-              The Vaaraa Philosophy
+              The VivahLook Philosophy
             </p>
             <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight text-amber-50">
               More Than Outfits <br />
               <span className="font-editorial-italic font-normal text-amber-200">It's a Feeling</span>
             </h2>
             <p className="mt-5 text-base sm:text-lg text-amber-100/70 max-w-xl leading-relaxed">
-              From the first vibrant yellow Haldi to the solemn bridal vows and the midnight reception dance, Vaaraa helps you visualize the moments that stay with you forever.
+              From the first vibrant yellow Haldi to the solemn bridal vows and the midnight reception dance, VivahLook helps you visualize the moments that stay with you forever.
             </p>
           </div>
 

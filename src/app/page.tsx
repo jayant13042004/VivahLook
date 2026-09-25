@@ -1,5 +1,6 @@
 import { HomeHero } from "@/components/home/HomeHero";
 import { HowItWorksSection } from "@/components/home/HowItWorksSection";
+import { ProductDemoVideo } from "@/components/home/ProductDemoVideo";
 import { OccasionsGallery } from "@/components/home/OccasionsGallery";
 import { OutfitCatalogSection } from "@/components/home/OutfitCatalogSection";
 import { BeforeAfterSlider } from "@/components/home/BeforeAfterSlider";
@@ -17,7 +18,10 @@ export default function HomePage() {
       {/* 2. How It Works: 3-Step Story */}
       <HowItWorksSection />
 
-      {/* 3. Wedding Occasions: Immersive 6-Ceremony Gallery */}
+      {/* 3. Product Demo Video: 30-Second Journey */}
+      <ProductDemoVideo />
+
+      {/* 4. Wedding Occasions: Immersive 6-Ceremony Gallery */}
       <OccasionsGallery />
 
       {/* 4. Outfit Exploration: Haute Couture Editorial Catalog */}

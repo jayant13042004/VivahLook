@@ -1,5 +1,5 @@
 /**
- * Theme tokens — Vaaraa luxury Indian wedding palette.
+ * Theme tokens — VivahLook luxury Indian wedding palette.
  *
  * Light: Warm royal ivory, deep wine/burgundy primary, restrained champagne gold accents.
  * Dark: Rich velvet obsidian, rose gold, warm cream text.

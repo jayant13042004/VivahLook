@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { VaaraaLogo } from "@/components/brand/VaaraaLogo";
+import { VivahLookLogo } from "@/components/brand/VivahLookLogo";
 import { siteConfig } from "@/config/site";
 import { Container } from "@/components/ui/Container";
 
@@ -9,7 +9,7 @@ export function Footer() {
       <Container className="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-5">
         {/* Brand Column (2 cols) */}
         <div className="lg:col-span-2 flex flex-col items-start">
-          <VaaraaLogo size="md" />
+          <VivahLookLogo size="md" />
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
             {siteConfig.description}
           </p>
@@ -55,7 +55,7 @@ export function Footer() {
             {[
               { label: "Privacy Policy", href: "/privacy" },
               { label: "Terms of Service", href: "/terms" },
-              { label: "About Vaaraa", href: "/about" },
+              { label: "About VivahLook", href: "/about" },
               { label: "Contact Us", href: "/contact" },
               { label: "FAQ", href: "/#faq" },
             ].map((link) => (

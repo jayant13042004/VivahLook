@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { VaaraaLogo } from "@/components/brand/VaaraaLogo";
+import { VivahLookLogo } from "@/components/brand/VivahLookLogo";
 import { Container } from "@/components/ui/Container";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { MobileNavbarAuth, NavbarAuth } from "@/components/auth/NavbarAuth";
@@ -13,12 +13,12 @@ const NAV_LINKS = [
   { label: "Home", href: "/" },
   { label: "How It Works", href: "/#how-it-works" },
   { label: "Occasions", href: "/#occasions" },
-  { label: "Outfits", href: "/#outfits" },
+  { label: "Catalog", href: "/#outfits" },
   { label: "Pricing", href: "/#pricing" },
   { label: "FAQ", href: "/#faq" },
 ];
 
-/** Editorial header with Vaaraa branding, desktop navigation, Try Free pill, and mobile drawer. */
+/** Editorial header with VivahLook branding, desktop navigation, Try Free pill, and mobile drawer. */
 export function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -38,7 +38,7 @@ export function Navbar() {
     <header className="sticky top-0 z-50 border-b border-border/80 bg-background/90 backdrop-blur-md transition-colors">
       <Container className="flex h-20 items-center justify-between gap-6">
         {/* Brand Logo */}
-        <VaaraaLogo size="md" />
+        <VivahLookLogo size="md" />
 
         {/* Desktop Navigation */}
         <nav className="hidden items-center gap-7 md:flex" aria-label="Main Navigation">
@@ -101,7 +101,7 @@ export function Navbar() {
             onClick={closeMenu}
             className="w-full text-center py-3 bg-primary text-primary-foreground font-semibold rounded-full text-sm shadow-md"
           >
-            Try Vaaraa Free →
+            Try VivahLook Free →
           </Link>
           {NAV_LINKS.map((item) => (
             <Link

@@ -36,7 +36,7 @@ const mono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   ...buildMetadata({
-    title: "Vaaraa — See Your Wedding Look | Luxury Indian Wedding Try-On",
+    title: "VivahLook — See Yourself in Your Perfect Wedding Look | AI Wedding Try-On",
     description: siteConfig.description,
   }),
   applicationName: siteConfig.name,
@@ -44,9 +44,10 @@ export const metadata: Metadata = {
     icon: "/icon.svg",
   },
   keywords: [
+    "VivahLook",
     "wedding look",
     "Indian wedding outfit",
-    "Vaaraa",
+    "virtual try on wedding",
     "sherwani",
     "lehenga",
     "saree",

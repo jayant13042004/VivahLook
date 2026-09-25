@@ -1,5 +1,5 @@
 /**
- * Navigation links — VivahLook / Vaaraa.
+ * Navigation links — VivahLook.
  */
 
 export type NavItem = {

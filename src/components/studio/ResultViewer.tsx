@@ -2,6 +2,8 @@
 
 import { useCallback } from "react";
 import { getOccasionById, getOutfitById, getStyleById } from "@/config/wedding";
+import { ShopTheLook } from "@/components/shop/ShopTheLook";
+import { trackProductEvent } from "@/lib/analytics/events";
 
 type Props = {
   originalImageBase64: string;
@@ -38,7 +40,11 @@ export function ResultViewer({
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-  }, [resultImageBase64, occasion, outfit, getImageSrc]);
+    trackProductEvent("look_downloaded", {
+      occasionId,
+      outfitId,
+    });
+  }, [resultImageBase64, occasion, outfit, getImageSrc, occasionId, outfitId]);
 
   const handleShare = useCallback(async () => {
     if (!resultImageBase64) return;
@@ -53,15 +59,25 @@ export function ResultViewer({
           text: `Check out my ${occasion?.label ?? "wedding"} look in a ${outfit?.label ?? "beautiful outfit"}! Created with VivahLook.`,
           files: [file],
         });
+        trackProductEvent("look_shared", {
+          occasionId,
+          outfitId,
+          method: "native",
+        });
       } else {
         // Fallback: copy URL to clipboard
         await navigator.clipboard.writeText(window.location.origin);
         alert("Link copied to clipboard!");
+        trackProductEvent("look_shared", {
+          occasionId,
+          outfitId,
+          method: "clipboard",
+        });
       }
     } catch {
       // User cancelled share or API not available
     }
-  }, [resultImageBase64, occasion, outfit, getImageSrc]);
+  }, [resultImageBase64, occasion, outfit, getImageSrc, occasionId, outfitId]);
 
   return (
     <div className="max-w-2xl mx-auto w-full px-4 py-8">
@@ -129,6 +145,9 @@ export function ResultViewer({
           New Photo
         </button>
       </div>
+
+      {/* Recreate & Shop The Look */}
+      <ShopTheLook outfitId={outfitId} />
 
       {/* Branding */}
       <p className="text-center text-xs text-muted-foreground/50 mt-8">

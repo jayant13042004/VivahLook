@@ -97,7 +97,7 @@ export function BeforeAfterSlider() {
                 href="/studio"
                 className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-primary text-primary-foreground font-semibold rounded-full text-sm hover:opacity-95 transition-all shadow-md hover:shadow-lg"
               >
-                <span>Try Vaaraa Free</span>
+                <span>Try VivahLook Free</span>
                 <span aria-hidden="true">→</span>
               </Link>
             </div>

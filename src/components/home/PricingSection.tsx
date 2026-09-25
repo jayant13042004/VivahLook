@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { paymentsConfig, formatINR } from "@/config/payments";
+import { usageConfig } from "@/config/wedding";
 
 export function PricingSection() {
   return (
@@ -13,7 +14,7 @@ export function PricingSection() {
             Bespoke Look <span className="font-editorial-italic font-normal text-primary">Packs</span>
           </h2>
           <p className="mt-4 text-sm sm:text-base text-muted-foreground leading-relaxed">
-            Begin with 2 free looks. Upgrade anytime with secure UPI, Cards, and NetBanking via Razorpay.
+            Begin with {usageConfig.freeGenerationLimit} complimentary look. Upgrade anytime with secure UPI, Cards, and NetBanking via Razorpay.
           </p>
         </div>
 
@@ -30,11 +31,13 @@ export function PricingSection() {
               <p className="font-display text-4xl font-bold text-foreground mt-4">
                 ₹0
               </p>
-              <p className="text-xs text-muted-foreground mt-1">2 Free wedding looks</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                {usageConfig.freeGenerationLimit} Free wedding look
+              </p>
 
               <ul className="mt-6 space-y-2.5 text-xs text-muted-foreground">
                 <li className="flex items-center gap-2">
-                  <span className="text-primary font-bold">✓</span> 2 instant generations
+                  <span className="text-primary font-bold">✓</span> {usageConfig.freeGenerationLimit} instant trial generation
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="text-primary font-bold">✓</span> All ceremonies & outfits

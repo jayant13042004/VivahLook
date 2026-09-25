@@ -1,22 +1,22 @@
 /**
- * Site configuration — Vaaraa luxury Indian wedding fashion visualization.
+ * Site configuration — VivahLook Indian wedding fashion & virtual styling.
  */
 
 export const siteConfig = {
-  name: "Vaaraa",
-  shortName: "Vaaraa",
-  tagline: "See Your Wedding Look",
+  name: "VivahLook",
+  shortName: "VivahLook",
+  tagline: "See Yourself in Your Perfect Wedding Look",
   description:
-    "Upload your photo and preview stunning Indian wedding outfits before you buy. Experience royal sherwanis, bridal lehengas, silk sarees, and couture with AI-powered visualization.",
+    "AI-powered Indian wedding fashion and virtual styling. Upload your photo and preview royal sherwanis, bridal lehengas, silk sarees, and reception couture before you buy.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   locale: "en_IN",
-  creator: "Vaaraa",
-  contactEmail: "concierge@vaaraa.com",
+  creator: "VivahLook",
+  contactEmail: "hello@vivahlook.com",
   copyrightYear: new Date().getFullYear(),
 
   social: [
-    { label: "Instagram", href: "https://instagram.com/vaaraaofficial" },
-    { label: "Pinterest", href: "https://pinterest.com/vaaraaofficial" },
+    { label: "Instagram", href: "https://instagram.com/vivahlook" },
+    { label: "Pinterest", href: "https://pinterest.com/vivahlook" },
   ] as const,
 
   ogImage: "/images/editorial/media_1790118434652.jpg",

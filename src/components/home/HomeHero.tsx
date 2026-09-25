@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 
 export function HomeHero() {
   return (
@@ -10,11 +9,11 @@ export function HomeHero() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           {/* Left Column — Editorial Storytelling (5 cols) */}
-          <div className="lg:col-span-6 flex flex-col items-start text-left">
+          <div className="lg:col-span-5 flex flex-col items-start text-left">
             {/* Delicate Tracked Eyebrow */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-primary/20 bg-primary/5 text-primary text-[11px] font-semibold tracking-[0.2em] uppercase mb-6">
               <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-              Indian Weddings, Reimagined With AI
+              AI Wedding Stylist & Virtual Try-On
             </div>
 
             {/* High-Contrast Editorial Serif Headline */}
@@ -26,7 +25,7 @@ export function HomeHero() {
 
             {/* Subheadline */}
             <p className="mt-6 text-base sm:text-lg text-muted-foreground max-w-lg leading-relaxed">
-              Upload your photo and try stunning Indian wedding outfits — from royal sherwanis to intricate bridal lehengas — before you buy.
+              Upload your natural photo, choose from curated bridal lehengas, royal sherwanis, and silk sarees, and preview your complete wedding wardrobe before you buy.
             </p>
 
             {/* Action Buttons */}
@@ -35,7 +34,7 @@ export function HomeHero() {
                 href="/studio"
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-full text-sm hover:opacity-95 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
               >
-                <span>Try Vaaraa Free</span>
+                <span>Try VivahLook Free</span>
                 <span aria-hidden="true">→</span>
               </Link>
 
@@ -50,82 +49,116 @@ export function HomeHero() {
               </a>
             </div>
 
-            {/* Social Validation Badge */}
-            <div className="mt-10 pt-6 border-t border-border/70 flex items-center gap-3">
-              <div className="flex -space-x-2 overflow-hidden">
-                <img
-                  className="inline-block h-8 w-8 rounded-full ring-2 ring-background object-cover"
-                  src="/images/editorial/occ_wedding.jpg"
-                  alt="Bride"
-                />
-                <img
-                  className="inline-block h-8 w-8 rounded-full ring-2 ring-background object-cover"
-                  src="/images/editorial/occ_guest.jpg"
-                  alt="Groom"
-                />
-                <img
-                  className="inline-block h-8 w-8 rounded-full ring-2 ring-background object-cover"
-                  src="/images/editorial/occ_mehendi.jpg"
-                  alt="Bride"
-                />
-                <img
-                  className="inline-block h-8 w-8 rounded-full ring-2 ring-background object-cover"
-                  src="/images/editorial/before_girl.jpg"
-                  alt="Customer"
-                />
-              </div>
-              <p className="text-xs text-muted-foreground font-medium">
-                Loved by <span className="text-foreground font-semibold">10,000+</span> soon-to-be newlyweds
-              </p>
+            {/* Trust & Occasion Tagline */}
+            <div className="mt-10 pt-6 border-t border-border/70 flex flex-wrap items-center gap-4 text-xs text-muted-foreground font-medium">
+              <span className="flex items-center gap-1.5">
+                <span className="text-accent font-bold">✓</span> 100% Private Photo Processing
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span className="text-accent font-bold">✓</span> 6 Auspicious Ceremonies
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span className="text-accent font-bold">✓</span> Recreate & Shop The Look
+              </span>
             </div>
           </div>
 
-          {/* Right Column — Large Cinematic Wedding Visual (7 cols) */}
-          <div className="lg:col-span-6 relative">
-            {/* Main Editorial Image Frame */}
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-border/80 bg-surface">
-              <img
-                src="/images/editorial/hero_couple.jpg"
-                alt="Royal Indian wedding couple in embroidered crimson lehenga and golden sherwani"
-                className="w-full h-auto object-cover max-h-[560px]"
-              />
-
-              {/* Subtle dark gradient scrim at the bottom */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
-
-              {/* Calligraphic Script Overlay */}
-              <div className="absolute top-6 right-6 text-right pointer-events-none select-none">
-                <p className="font-editorial-italic text-3xl sm:text-4xl text-amber-100/90 drop-shadow-md">
-                  Your story
-                </p>
-                <p className="font-editorial-italic text-2xl sm:text-3xl text-amber-200/90 drop-shadow-md -mt-1">
-                  Your look
-                </p>
-                <div className="w-8 h-[1px] bg-accent/80 ml-auto mt-2" />
-              </div>
-
-              {/* Floating Product Demonstration Tag */}
-              <div className="absolute bottom-6 left-6 right-6 sm:right-auto bg-background/95 backdrop-blur-md border border-border/80 rounded-2xl p-3.5 shadow-xl flex items-center gap-3.5">
-                <div className="w-12 h-12 rounded-xl overflow-hidden border border-border shrink-0">
-                  <img
-                    src="/images/editorial/before_girl.jpg"
-                    alt="Upload photo"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="text-left">
-                  <p className="text-[11px] font-semibold uppercase tracking-wider text-primary">
-                    Instant AI Try-On
-                  </p>
-                  <p className="text-xs font-medium text-foreground">
-                    Your photo → Royal Bridal Couture
-                  </p>
-                </div>
-                <div className="ml-auto pl-2">
-                  <span className="w-6 h-6 rounded-full bg-accent/20 text-accent flex items-center justify-center text-xs">
-                    ✨
+          {/* Right Column — Visual Transformation Try-On Composition (7 cols) */}
+          <div className="lg:col-span-7 relative">
+            <div className="relative rounded-3xl p-4 sm:p-6 bg-surface border-2 border-border/80 shadow-2xl overflow-hidden">
+              {/* Top Workflow Stepper Pill */}
+              <div className="flex items-center justify-between pb-4 mb-4 border-b border-border/60">
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-accent animate-ping" />
+                  <span className="text-xs font-bold uppercase tracking-wider text-foreground">
+                    Virtual Try-On Flow
                   </span>
                 </div>
+                <span className="text-[11px] text-muted-foreground font-medium">
+                  Natural Photo → Curated Outfit → Bespoke Look
+                </span>
+              </div>
+
+              {/* 3-Stage Visual Pipeline Composition */}
+              <div className="grid grid-cols-12 gap-3 sm:gap-4 items-center">
+                {/* Step 1: User Upload (3.5 cols) */}
+                <div className="col-span-4 sm:col-span-3 flex flex-col items-center">
+                  <div className="relative w-full aspect-[3/4] rounded-2xl overflow-hidden border border-border shadow-md bg-muted">
+                    <img
+                      src="/images/editorial/before_girl.jpg"
+                      alt="Your natural photo"
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute top-2 left-2 px-1.5 py-0.5 rounded bg-black/70 backdrop-blur-xs text-[9px] font-bold uppercase tracking-wider text-white">
+                      1. You
+                    </div>
+                  </div>
+                  <span className="text-[11px] font-medium text-muted-foreground mt-2 text-center">
+                    Clear Portrait
+                  </span>
+                </div>
+
+                {/* Operator Symbol (+ / arrow) */}
+                <div className="col-span-1 flex items-center justify-center text-muted-foreground font-bold text-sm sm:text-lg">
+                  +
+                </div>
+
+                {/* Step 2: Selected Curated Outfit (3.5 cols) */}
+                <div className="col-span-3 sm:col-span-3 flex flex-col items-center">
+                  <div className="relative w-full aspect-[3/4] rounded-2xl overflow-hidden border border-accent/40 shadow-md bg-muted">
+                    <img
+                      src="/images/editorial/occ_wedding.jpg"
+                      alt="Selected wedding outfit"
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute top-2 left-2 px-1.5 py-0.5 rounded bg-primary/90 text-[9px] font-bold uppercase tracking-wider text-primary-foreground shadow-2xs">
+                      2. Outfit
+                    </div>
+                  </div>
+                  <span className="text-[11px] font-medium text-foreground mt-2 text-center truncate w-full">
+                    Royal Lehenga
+                  </span>
+                </div>
+
+                {/* Operator Symbol (→ / AI magic) */}
+                <div className="col-span-1 flex items-center justify-center text-primary font-bold text-sm sm:text-lg">
+                  →
+                </div>
+
+                {/* Step 3: AI Generated Transformation (Primary Result, 5 cols) */}
+                <div className="col-span-12 sm:col-span-4 flex flex-col items-center mt-3 sm:mt-0">
+                  <div className="relative w-full aspect-[3/4] rounded-2xl overflow-hidden border-2 border-primary shadow-xl bg-muted ring-2 ring-primary/20">
+                    <img
+                      src="/images/editorial/after_bride.jpg"
+                      alt="Generated wedding look"
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-accent text-accent-foreground text-[9px] font-bold uppercase tracking-wider shadow-sm">
+                      ✨ 3. Your Look
+                    </div>
+                    <div className="absolute bottom-2 left-2 right-2 bg-background/95 backdrop-blur-xs rounded-lg p-1.5 border border-border/70 text-center">
+                      <p className="text-[10px] font-bold text-foreground">
+                        Photorealistic Result
+                      </p>
+                      <p className="text-[9px] text-muted-foreground">
+                        Ready to download & shop
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom Feature Badges */}
+              <div className="mt-4 pt-3 border-t border-border/60 flex items-center justify-between text-[11px] text-muted-foreground">
+                <span className="flex items-center gap-1">
+                  <span className="text-primary font-bold">●</span> Preserves Facial Structure
+                </span>
+                <span className="flex items-center gap-1">
+                  <span className="text-accent font-bold">●</span> Drapes Authentic Embroidery
+                </span>
+                <span className="hidden sm:inline-flex items-center gap-1">
+                  <span className="text-emerald-500 font-bold">●</span> High-Res 8K Details
+                </span>
               </div>
             </div>
 

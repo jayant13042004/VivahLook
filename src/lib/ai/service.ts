@@ -22,6 +22,9 @@
 
 import { buildWeddingLookPrompt } from "@/lib/ai/prompt-builder";
 import type { WeddingLookRequest, WeddingLookResponse } from "@/lib/ai/types";
+import { generationMetrics } from "@/lib/ai/provider";
+
+export { generationMetrics } from "@/lib/ai/provider";
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
@@ -246,6 +249,19 @@ export async function generateWeddingLook(
         const result = await tryGeminiModel(model, request, basePrompt);
 
         if (result.success && result.imageBase64) {
+          const executionTimeMs = Date.now() - startTime;
+          generationMetrics.record({
+            provider: "gemini",
+            model,
+            success: true,
+            executionTimeMs,
+            estimatedCostINR: 2.5,
+            occasionId: request.occasionId,
+            outfitId: request.outfitId,
+            styleId: request.styleId,
+            gender: request.gender,
+          });
+
           return {
             success: true,
             imageBase64: result.imageBase64,
@@ -254,7 +270,7 @@ export async function generateWeddingLook(
               outfitId: request.outfitId,
               styleId: request.styleId,
               gender: request.gender,
-              executionTimeMs: Date.now() - startTime,
+              executionTimeMs,
             },
           };
         }
@@ -272,13 +288,39 @@ export async function generateWeddingLook(
     const enhancedPrompt = await enhancePromptWithGemini(request, basePrompt);
     const fluxResult = await generateWithFluxEngine(enhancedPrompt, request);
 
+    const executionTimeMs = Date.now() - startTime;
     if (fluxResult.success && fluxResult.metadata) {
-      fluxResult.metadata.executionTimeMs = Date.now() - startTime;
+      fluxResult.metadata.executionTimeMs = executionTimeMs;
     }
+
+    generationMetrics.record({
+      provider: "flux",
+      model: "flux-schnell/pollinations",
+      success: fluxResult.success,
+      executionTimeMs,
+      estimatedCostINR: 0,
+      occasionId: request.occasionId,
+      outfitId: request.outfitId,
+      styleId: request.styleId,
+      gender: request.gender,
+      error: fluxResult.error,
+    });
 
     return fluxResult;
   } catch (error) {
     console.error("[VivahLook] Generation pipeline error:", error);
+    generationMetrics.record({
+      provider: "placeholder",
+      model: "fallback",
+      success: false,
+      executionTimeMs: Date.now() - startTime,
+      estimatedCostINR: 0,
+      occasionId: request.occasionId,
+      outfitId: request.outfitId,
+      styleId: request.styleId,
+      gender: request.gender,
+      error: error instanceof Error ? error.message : "Unknown pipeline error",
+    });
     // Graceful fallback to avoid leaving user hanging
     return generatePlaceholder(request);
   }

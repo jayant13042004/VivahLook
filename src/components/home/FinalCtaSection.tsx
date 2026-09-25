@@ -25,7 +25,7 @@ export function FinalCtaSection() {
             href="/studio"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-10 py-4 bg-surface text-foreground font-bold rounded-full text-sm hover:opacity-95 transition-all shadow-xl hover:-translate-y-0.5"
           >
-            <span>Try Vaaraa Free</span>
+            <span>Try VivahLook Free</span>
             <span aria-hidden="true">→</span>
           </Link>
 

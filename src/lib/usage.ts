@@ -1,5 +1,5 @@
 /**
- * VivahLook / Vaaraa — Client-side usage tracking.
+ * VivahLook — Client-side usage tracking.
  *
  * Tracks free generation count in localStorage for guest users.
  * In local development (localhost), limits are bypassed so you can test freely.

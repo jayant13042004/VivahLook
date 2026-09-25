@@ -73,7 +73,7 @@ Open [http://localhost:3000](http://localhost:3000) to view the landing page or 
 │   │   ├── admin/wedding/   # Internal metrics dashboard
 │   │   └── icon.svg         # Luxury vector favicon
 │   ├── components/
-│   │   ├── brand/           # Vaaraa wordmark & monogram
+│   │   ├── brand/           # VivahLook wordmark & monogram
 │   │   ├── home/            # Editorial landing page sections & Before/After slider
 │   │   ├── studio/          # Step components (Upload, Occasion, Outfit, Style, Result)
 │   │   ├── layout/          # Navbar, Footer, SiteShell
